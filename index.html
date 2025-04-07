@@ -61,10 +61,10 @@
       }
 
       vec4 rings(vec4 color) {
-        vec2 center = vec2(uViewport.x / 2.0 + sin(uElapsed / 1000.0) * 120.0, uViewport.y / 2.0);
+        vec2 center = vec2(uViewport.x / 2.0 + sin(uElapsed) * 120.0, uViewport.y / 2.0);
         float dist = distance2d(vec2(gl_FragCoord.x, gl_FragCoord.y), center);
-        float xOpa = abs(sin(uElapsed / 10000.0 - dist / 30.0 * sin(gl_FragCoord.x / 600.0 + uElapsed / 10000.0)));
-        float yOpa = abs(sin(uElapsed / 400.0 - dist / 680.0));
+        float xOpa = abs(sin(uElapsed / 10.0 - dist / 30.0 * sin(gl_FragCoord.x / 600.0 + uElapsed / 10.0)));
+        float yOpa = abs(sin(uElapsed * 1.5 - dist / 680.0));
         float opa = 0.0;
 
         if (xOpa * yOpa > 0.5) {

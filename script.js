@@ -123,7 +123,7 @@ function animate() {
 
   gl.uniform4fv(uGlobalColor, [1.0, 1.0, 1.0, 1.0]);
   gl.uniform2fv(uViewport, [canvas.width, canvas.height]);
-  gl.uniform1f(uElapsed, (new Date().getTime() - startTime));
+  gl.uniform1f(uElapsed, (new Date().getTime() - startTime) / 1000.0);
 
   // Sidotaan verteksipuskuri ja asetetaan verteksiattribuutit
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);

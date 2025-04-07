@@ -23,7 +23,7 @@ let aVertexPosition; // Verteksien sijainti shaderissa
  * WebGL:n alustus ja shaderien kääntäminen
  */
 function start() {
-  glCanvas = document.getElementsByTagName("canvas")[0];
+  glCanvas = document.querySelector("canvas");
   glCanvas.width = window.innerWidth;
   glCanvas.height = window.innerHeight;
   gl = glCanvas.getContext("webgl", { antialias: true, premultipliedAlpha: false });

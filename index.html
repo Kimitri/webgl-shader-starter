@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shader starter</title>
-  <style type="text/css" media="screen">
-    body {
-      background: #192A41;
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .header {
-      display: grid;
-      box-sizing: border-box;
-      justify-content: center;
-      align-content: center;
-      text-align: center;
-      min-height: 100vh;
-    }
-
-    .header h1{
-      z-index: 1;
-      color: #fff;
-    }
-
-    canvas {
-      width: 100vw;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-      z-index: 0;
-    }
-  </style>
-  <script id="vertex-shader" type="x-shader/x-vertex">
-    attribute vec2 aVertexPosition;
-
-    void main() {
-      gl_Position = vec4(aVertexPosition, 0.0, 1.0);
-    }
-  </script>
-  <script id="fragment-shader" type="x-shader/x-fragment">
-    #ifdef GL_ES
-      precision highp float;
-    #endif
-
-    uniform vec4 uGlobalColor;
-    uniform vec2 uViewport;
-    uniform float uElapsed;
-
-    float distance2d(vec2 coord1, vec2 coord2) {
-      float x_dist = abs(coord1.x - coord2.x);
-      float y_dist = abs(coord1.y - coord2.y);
-
-      return sqrt(pow(x_dist, 2.0) + pow(y_dist, 2.0));
-    }
-
-    vec4 rings(vec4 color) {
-      vec2 center = vec2(uViewport.x / 2.0 + sin(uElapsed / 1000.0) * 120.0, uViewport.y / 2.0);
-      float dist = distance2d(vec2(gl_FragCoord.x, gl_FragCoord.y), center);
-      float xOpa = abs(sin(uElapsed / 10000.0 - dist / 10.0 * sin(gl_FragCoord.x / 600.0 + uElapsed / 10000.0)));
-      float yOpa = abs(sin(uElapsed / 400.0 - dist / 680.0));
-      float opa = 0.0;
-
-      if (xOpa * yOpa > 0.5) {
-        opa = 1.0;
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shader starter</title>
+    <style type="text/css" media="screen">
+      body {
+        background: #192A41;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
       }
 
-      return vec4(color.r, color.g, color.b, opa);
-    }
+      .header {
+        display: grid;
+        box-sizing: border-box;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        min-height: 100vh;
+      }
 
-    void main() {
-      gl_FragColor = rings(uGlobalColor);
-    }
-  </script>
-</head>
-<body>
-  <div class="header">
-    <h1>WebGL shader starter</h1>
-    <canvas width="100%" height="100%"></canvas>
-  </div>
-  <script src="script.js" charset="utf-8" async defer></script>
-</body>
+      .header h1{
+        z-index: 1;
+        color: #fff;
+      }
+
+      canvas {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 0;
+      }
+    </style>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+      attribute vec2 aVertexPosition;
+
+      void main() {
+        gl_Position = vec4(aVertexPosition, 0.0, 1.0);
+      }
+    </script>
+    <script id="fragment-shader" type="x-shader/x-fragment">
+      #ifdef GL_ES
+      precision highp float;
+      #endif
+
+      uniform vec4 uGlobalColor;
+      uniform vec2 uViewport;
+      uniform float uElapsed;
+
+      float distance2d(vec2 coord1, vec2 coord2) {
+        float x_dist = abs(coord1.x - coord2.x);
+        float y_dist = abs(coord1.y - coord2.y);
+
+        return sqrt(pow(x_dist, 2.0) + pow(y_dist, 2.0));
+      }
+
+      vec4 rings(vec4 color) {
+        vec2 center = vec2(uViewport.x / 2.0 + sin(uElapsed / 1000.0) * 120.0, uViewport.y / 2.0);
+        float dist = distance2d(vec2(gl_FragCoord.x, gl_FragCoord.y), center);
+        float xOpa = abs(sin(uElapsed / 10000.0 - dist / 10.0 * sin(gl_FragCoord.x / 600.0 + uElapsed / 10000.0)));
+        float yOpa = abs(sin(uElapsed / 400.0 - dist / 680.0));
+        float opa = 0.0;
+
+        if (xOpa * yOpa > 0.5) {
+          opa = 1.0;
+        }
+
+        return vec4(color.r, color.g, color.b, opa);
+      }
+
+      void main() {
+        gl_FragColor = rings(uGlobalColor);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>WebGL shader starter</h1>
+      <canvas width="100%" height="100%"></canvas>
+    </div>
+    <script src="script.js" charset="utf-8" async defer></script>
+  </body>
 </html>

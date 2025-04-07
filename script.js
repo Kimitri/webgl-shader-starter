@@ -135,7 +135,7 @@ function animate() {
   // Piirretään kolmiot
   gl.drawArrays(gl.TRIANGLES, 0, vertexArray.length / vertexNumComponents);
 
-  window.requestAnimationFrame(animate);
+  window.requestAnimationFrame(animate); // Pyydetään seuraavaa animaatioframea
 }
 
 

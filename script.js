@@ -1,6 +1,6 @@
 // WebGL-konteksti ja piirtoalue
 let gl = null; // WebGL-konteksti
-let glCanvas = null; // Piirtoalue
+let canvas = null; // Piirtoalue
 let shaderProgram; // Shader-ohjelma, joka välitetään GPU:lle
 
 // Perustiedot
@@ -23,10 +23,10 @@ let aVertexPosition; // Verteksien sijainti shaderissa
  * WebGL:n alustus ja shaderien kääntäminen
  */
 function start() {
-  glCanvas = document.querySelector("canvas");
-  glCanvas.width = window.innerWidth;
-  glCanvas.height = window.innerHeight;
-  gl = glCanvas.getContext("webgl", { antialias: true, premultipliedAlpha: false });
+  canvas = document.querySelector("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  gl = canvas.getContext("webgl", { antialias: true, premultipliedAlpha: false });
 
   const shaderSet = [
     { type: gl.VERTEX_SHADER, id: "vertex-shader" },
@@ -34,7 +34,7 @@ function start() {
   ];
 
   shaderProgram = buildShaderProgram(shaderSet);
-  aspectRatio = glCanvas.width / glCanvas.height;
+  aspectRatio = canvas.width / canvas.height;
 
   // Verteksipisteiden koordinaatit (kaksi kolmiota)
   vertexArray = new Float32Array([
@@ -110,7 +110,7 @@ function compileShader(id, type) {
  * Yhden animaatioframen piirtäminen
  */
 function animate() {
-  gl.viewport(0, 0, glCanvas.width, glCanvas.height);
+  gl.viewport(0, 0, canvas.width, canvas.height);
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -122,7 +122,7 @@ function animate() {
   uViewport = gl.getUniformLocation(shaderProgram, "uViewport");
 
   gl.uniform4fv(uGlobalColor, [1.0, 1.0, 1.0, 1.0]);
-  gl.uniform2fv(uViewport, [glCanvas.width, glCanvas.height]);
+  gl.uniform2fv(uViewport, [canvas.width, canvas.height]);
   gl.uniform1f(uElapsed, (new Date().getTime() - startTime));
 
   // Sidotaan verteksipuskuri ja asetetaan verteksiattribuutit
@@ -142,6 +142,6 @@ function animate() {
 // Tarvittavat event listenerit
 window.addEventListener("load", start, false);
 window.addEventListener("resize", () => {
-  glCanvas.width = window.innerWidth;
-  glCanvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });

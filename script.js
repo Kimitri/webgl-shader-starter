@@ -27,6 +27,8 @@ function start() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   gl = canvas.getContext("webgl", { antialias: true, premultipliedAlpha: false });
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
 
   const shaderSet = [
     { type: gl.VERTEX_SHADER, id: "vertex-shader" },
@@ -34,6 +36,8 @@ function start() {
   ];
 
   shaderProgram = buildShaderProgram(shaderSet);
+  gl.useProgram(shaderProgram);
+
   aspectRatio = canvas.width / canvas.height;
 
   // Verteksipisteiden koordinaatit (kaksi kolmiota)
@@ -111,10 +115,6 @@ function compileShader(id, type) {
  */
 function animate() {
   gl.viewport(0, 0, canvas.width, canvas.height);
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-
-  gl.useProgram(shaderProgram);
 
   // Asetetaan uniformit
   uGlobalColor = gl.getUniformLocation(shaderProgram, "uGlobalColor");
